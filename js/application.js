@@ -62,20 +62,15 @@ Application.prototype.reconnect = function() {
 Application.prototype.getSelectedOptions = function() {
     var e1 = document.getElementById('port-picker'),
         e2 = document.getElementById('baudrate-picker'),
-        e3 = document.getElementById('databits-picker'),
-        e4 = document.getElementById('parity-picker'),
-        e5 = document.getElementById('stopbits-picker'),
+
         port = e1.options[e1.selectedIndex].value,
         baudrate = parseInt(e2.options[e2.selectedIndex].value),
-        dataBits = e3.options[e3.selectedIndex].value,
-        parityBit = e4.options[e4.selectedIndex].value,
-        stopBits = e5.options[e5.selectedIndex].value,
         opts = {};
         opts[this.PORT_KEY] = port;
         opts[this.BITRATE_KEY] = baudrate;
-        opts[this.DATABITS_KEY] = dataBits;
-        opts[this.PARITY_KEY] = parityBit;
-        opts[this.STOPBITS_KEY] = stopBits;
+        opts[this.DATABITS_KEY] = "seven";
+        opts[this.PARITY_KEY] = "no";
+        opts[this.STOPBITS_KEY] = "one";
     return opts;
 };
 
@@ -120,30 +115,6 @@ Application.prototype.loadOptions = function() {
         }
     });
 
-    chrome.storage.sync.get(self.DATABITS_KEY, function(result) {
-        if (result.hasOwnProperty(self.DATABITS_KEY) !== undefined) {
-            document.querySelector('#databits-picker').value = result[self.DATABITS_KEY];
-        } else {
-            document.querySelector('#databits-picker').value = "eight";
-        }
-    });
-
-    chrome.storage.sync.get(self.PARITY_KEY, function(result) {
-        if (result.hasOwnProperty(self.PARITY_KEY) !== undefined) {
-            document.querySelector('#parity-picker').value = result[self.PARITY_KEY];
-        } else {
-            document.querySelector('#parity-picker').value = "no";
-        }
-    });
-
-    chrome.storage.sync.get(self.STOPBITS_KEY, function(result) {
-        if (result.hasOwnProperty(self.STOPBITS_KEY) !== undefined) {
-            document.querySelector('#stopbits-picker').value = result[self.STOPBITS_KEY];
-        } else {
-            
-            document.querySelector('#stopbits-picker').value = "one";
-        }
-    });
 };
 
 Application.prototype.saveOptions = function() {

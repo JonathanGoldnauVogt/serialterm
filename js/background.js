@@ -2,6 +2,26 @@ function Background() {
   
 }
 
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+    if (request) {
+      if (request.message) {
+        if (request.message == "version") {
+
+          //my chrome application initial load screen is login.html
+          //window.open('index.html');
+          this.launch();
+          //if required can send a response back to the web site aswell. I have logged the reply on the web site
+          sendResponse({version: '1.1.1'});
+        }
+      }
+    }
+    return true;
+  });
+
+
+
+
 Background.prototype.ifShowFrame_ = function() {
   var version = parseInt(navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
   var os = 'other';
